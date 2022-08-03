@@ -5,6 +5,7 @@ import com.themechguy.registrationpage.model.User;
 import com.themechguy.registrationpage.repository.UserReopsitory;
 import com.themechguy.registrationpage.web.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,14 +29,14 @@ public class UserServiceImpl implements UserService{
 */
     private UserReopsitory userReopsitory;
 
-    public UserServiceImpl(UserReopsitory userReopsitory) {
+    public UserServiceImpl( @Lazy UserReopsitory userReopsitory) {
         super();
         this.userReopsitory = userReopsitory;
     }
 
 
     @Override
-    public User save(UserRegistrationDto registrationDto) {
+    public User save( UserRegistrationDto registrationDto) {
         User user = new User(registrationDto.getFirstName(),
                 registrationDto.getLastName(), registrationDto.getEmail(),
                 passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
